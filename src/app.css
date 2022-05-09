@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "MerriweatherSans";
+    src: url("/fonts/Merriweather_Sans/MerriweatherSans-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: "MerriweatherSans";
+    src: url("/fonts/Merriweather_Sans/MerriweatherSans-Italic-VariableFont_wght.ttf");
+    font-style: italic;
+}
+
+* {
+    font-family: "MerriweatherSans", Arial, Helvetica, sans-serif;
+}
