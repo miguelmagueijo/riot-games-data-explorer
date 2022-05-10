@@ -1,69 +1,6 @@
 <script lang="ts">
     import * as zip from "@zip.js/zip.js";
-    
-    type LeagueOfLegendsFiles = {
-        chat?: zip.Entry[],
-        clash?: zip.Entry,
-        reports?: zip.Entry,
-        rp?: zip.Entry,
-        summoner?: zip.Entry,
-        store?: zip.Entry,
-    }
-
-    type LeagueOfLegendsData = {
-        reports: LoLReports,
-        rp: Array<LoLRPPurchase>,
-        summoner: LoLSummoner,
-        store: Array<LoLStore>,
-    }
-
-    
-
-    type LoLSummoner = {
-        summoner_name: string,
-        lol_platform: string,
-    }
-
-    type LoLReports = {
-        reports_made: Array<Object>,
-        reports_received: Array<Object>,
-    }
-
-    type LoLRPPurchase = {
-        amount: string,
-        created: string,
-        currency_type: string,
-        payment_type: string,
-        store_account_id: number,
-        transaction_id: string,
-        transaction_number: string,
-        user_ip: string,
-    }
-
-    type LoLStore = {
-        created: string,
-        id: string,
-        ip_address: string,
-        ip_balance: number,
-        ip_delta: number,
-        is_refunded: string,
-        item_id: string,
-        rp_balance: number,
-        rp_delta: number,
-        type: string
-    }
-
-    type StoreData = {
-        firstDate: string,
-        ip: number,
-        rp: number,
-        gifts_given: number,
-        gifts_received: number,
-        total_refunds: number,
-        rp_sent: number,
-        rp_received: number,
-        money_spent: number,
-    }
+    import LoLComponent from "../components/LoL/index.svelte";
 
     const dataFiles: LeagueOfLegendsFiles = {
         chat: [],
@@ -80,8 +17,6 @@
         store: [],
     }
 
-
-    let summonerData: LoLSummoner;
     const storeData: StoreData = {
         firstDate: "Unknown",
         ip: 0,
@@ -193,81 +128,6 @@
             Select data.zip: 
             <input type="file" accept=".zip" on:change="{readZipFile}">
         </div>
-        <h2 class="text-2xl font-bold">
-            League of Legends
-        </h2>
-        <hr class="mb-5 rounded border-blue-800 border-2">
-        <div class="space-y-10">
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="text-xs">Summoner name</p>
-                    <span class="font-bold text-lg">{data.summoner.summoner_name}</span>
-                </div>
-                <div class="font-bold text-lg">
-                    {data.summoner.lol_platform}
-                </div>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold">
-                    Store information
-                </h3>
-                <p class="mt-4">
-                    Since <span class="font-bold text-sm">{storeData.firstDate}</span> you:<br>
-                </p>
-                <div class="grid grid-cols-2 gap-2 text-sm">
-                    <div class="store-card">
-                        Spent <span class="font-bold text-lg">{storeData.ip}</span> ip/be
-                    </div>
-                    <div class="store-card">
-                        Spent <span class="font-bold text-lg">{storeData.money_spent}</span> €/$<br>
-                    </div>
-                    <div class="store-card">
-                        Bought <span class="font-bold text-lg">{storeData.rp}</span> rp<br>
-                    </div>
-                    <div class="store-card col-span">
-                        Made <span class="font-bold text-lg">{storeData.total_refunds}</span> refunds<br>
-                    </div>
-                    <div class="store-card">
-                        Gived <span class="font-bold text-lg">{storeData.gifts_given}</span> gifts<br>
-                    </div>
-                    <div class="store-card">
-                        Received <span class="font-bold text-lg">{storeData.gifts_received}</span> gifts<br>
-                    </div>
-                    
-                </div>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold mb-2">
-                    Reports information
-                </h3>
-                <p class="mt-4">
-                    Your reports:<br>
-                </p>
-                <div class="grid grid-cols-2 gap-4">
-                    {#each Object.entries(data.reports.reports_made) as [reportName, totalReports]}
-                        <div class="store-card">
-                            {  reportName[0] + reportName.slice(1).replaceAll("_", " ").toLowerCase() } - {totalReports}
-                        </div>    
-                    {/each}
-                </div>
-                <p class="mt-4">
-                    Reports received:
-                </p>
-                <div class="grid grid-cols-2 gap-4">
-                    {#each Object.entries(data.reports.reports_received) as [reportName, totalReports]}
-                        <div class="store-card">
-                            { reportName[0] + reportName.slice(1).replaceAll("_", " ").toLowerCase() } - {totalReports}
-                        </div>    
-                    {/each}
-                    
-                </div>
-            </div>
-        </div>
+        <LoLComponent />
     </div>
 </main>
-
-<style>
-    .store-card {
-        @apply bg-blue-800 text-white rounded py-3 text-center align-middle;
-    }
-</style>
